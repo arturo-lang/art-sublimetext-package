@@ -11,6 +11,11 @@ contexts:
       scope: punctuation.definition.string.begin.arturo
       push: double_quoted_string
 
+    # She-bang line
+    - match: '#!'
+      scope: punctuation.definition.comment.arturo
+      push: line_comment
+
     # Single-line comments
     - match: '//'
       scope: punctuation.definition.comment.arturo
