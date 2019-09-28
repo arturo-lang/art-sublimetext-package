@@ -17,7 +17,7 @@ contexts:
       push: line_comment
 
     # Array-Function symbols
-    - match: '(\$|#)'
+    - match: '(\$|#|~([a-zA-Z_\.0-9]+)?)'
       scope: variable.parameter.arturo
 
     # Symbols
