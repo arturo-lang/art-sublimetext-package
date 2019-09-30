@@ -21,8 +21,17 @@ contexts:
       scope: punctuation.definition.comment.arturo
       push: line_comment
 
+    # Multi-line comments
+    - match: /\*
+      scope: punctuation.definition.comment.source.arturo
+      push:
+        - meta_scope: comment.block.source.arturo
+        - match: \*/\n?
+          scope: punctuation.definition.comment.source.aruro
+          pop: true
+
     # Array-Function symbols
-    - match: '(\$|#|~([a-zA-Z_\.0-9]+)?)'
+    - match: '(\||\$|#|~([a-zA-Z_\.0-9]+)?)'
       scope: variable.parameter.arturo
 
     # Symbols
