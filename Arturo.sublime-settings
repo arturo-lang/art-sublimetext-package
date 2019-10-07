@@ -1,7 +1,8 @@
 {
 	"extensions":
 	[
-		"art"
+		"art",
+		"art.lib"
 	],
 	"tab_size": 4
 }

@@ -1,8 +1,8 @@
 %YAML 1.2
 ---
-# See http://www.sublimetext.com/docs/3/syntax.html
 file_extensions:
   - art
+  - art.lib
 scope: source.arturo
 contexts:
   main:
@@ -30,40 +30,33 @@ contexts:
           scope: punctuation.definition.comment.source.aruro
           pop: true
 
-    # Array-Function symbols
-    - match: '(\||\$|#|~([a-zA-Z_\.0-9]+)?)'
-      scope: variable.parameter.arturo
-
     # Symbols
+    - match: '(\||\$|#|!|&([0-9]+)?)'
+      scope: support.function.arturo
+
+    # Operators
     - match: '(\+|\-|\*|\/|\%|\&\&|\|\||\<|\>|=|\<=|\>=|!=)'
       scope: entity.name.tag.arturo
 
     # System functions
-    - match: '(\b)(array:all|all|array:any|any|array:avg|avg|array:count|count|array:difference|difference|array:filter|filter|array:first|first|array:fold|fold|array:gcd|gcd|array:intersection|intersection|array:join|join|array:last|last|array:map|map|array:max|max|array:median|median|array:min|min|array:permutations|permutations|array:product|product|array:range|range|array:reverse|reverse|array:sample|sample|array:shuffle|shuffle|array:sort|sort|array:sum|sum|array:tail|tail|array:union|union|array:unique|unique|array:zip|zip|collection:add|add|collection:contains|contains|collection:delete|delete|collection:deleteBy|deleteBy|collection:find|find|collection:get|get|collection:isEmpty|isEmpty|collection:set|set|collection:size|size|collection:slice|slice|convert:toBin|toBin|convert:toHex|toHex|convert:toNumber|toNumber|convert:toOct|toOct|convert:toString|toString|core:and|and|core:exec|exec|core:if|if|core:import|import|core:input|input|core:lazy|lazy|core:log|log|core:loop|loop|core:memoize|memoize|core:new|new|core:not|not|core:or|or|core:panic|panic|core:print|print|core:return|return|core:shl|shl|core:shr|shr|core:test__|test__|core:trace|trace|core:xor|xor|crypto:hash|hash|crypto:md5|md5|crypto:sha256|sha256|crypto:sha512|sha512|csv:parse|parse|date:dateNow|dateNow|date:datetimeNow|datetimeNow|date:day|day|date:month|month|date:timeNow|timeNow|date:timer|timer|dictionary:hasKey|hasKey|dictionary:keys|keys|file:exists|exists|file:read|read|file:write|write|gui:app|app|gui:button|button|gui:vbox|vbox|gui:window|window|html:markdownToHtml|markdownToHtml|json:generate|generate|json:parse|parse|number:acos|acos|number:acosh|acosh|number:asin|asin|number:asinh|asinh|number:atan|atan|number:atanh|atanh|number:ceil|ceil|number:cos|cos|number:cosh|cosh|number:even|even|number:exp|exp|number:floor|floor|number:ln|ln|number:log10|log10|number:odd|odd|number:random|random|number:round|round|number:sin|sin|number:sinh|sinh|number:sqrt|sqrt|number:tan|tan|number:tanh|tanh|path:createDir|createDir|path:currentDir|currentDir|path:dir|dir|path:getDir|getDir|path:getExt|getExt|path:getFilename|getFilename|path:isDirectory|isDirectory|path:isFile|isFile|path:isSymlink|isSymlink|path:normalizePath|normalizePath|reflection:object|object|reflection:pointer|pointer|reflection:symbolExists|symbolExists|reflection:syms|syms|reflection:type|type|string:capitalize|capitalize|string:char|char|string:characters|characters|string:endsWith|endsWith|string:isAlpha|isAlpha|string:isAlphanumeric|isAlphanumeric|string:isControl|isControl|string:isDigit|isDigit|string:isLowercase|isLowercase|string:isMatch|isMatch|string:isUppercase|isUppercase|string:isWhitespace|isWhitespace|string:levenshtein|levenshtein|string:lines|lines|string:lowercase|lowercase|string:matches|matches|string:padCenter|padCenter|string:padLeft|padLeft|string:padRight|padRight|string:replace|replace|string:split|split|string:startsWith|startsWith|string:strip|strip|string:uppercase|uppercase|string:uuid|uuid|string:words|words|system:delay|delay|system:env|env|system:shell|shell|system:spawn|spawn|system:thread|thread|web:download|download|web:post|post|xml:check|check|yaml:generate|generate|yaml:parse|parse)\b'
+    - match: '(?<!\.)(textfield|array:all|all|array:any|any|array:avg|avg|array:count|count|array:difference|difference|array:filter|filter|array:first|first|array:fold|fold|array:gcd|gcd|array:intersection|intersection|array:join|join|array:last|last|array:map|map|array:max|max|array:median|median|array:min|min|array:permutations|permutations|array:product|product|array:range|range|array:reverse|reverse|array:sample|sample|array:shuffle|shuffle|array:sort|sort|array:sum|sum|array:tail|tail|array:union|union|array:unique|unique|array:zip|zip|collection:add|add|collection:contains|contains|collection:delete|delete|collection:deleteBy|deleteBy|collection:find|find|collection:get|get|collection:isEmpty|isEmpty|collection:set|set|collection:size|size|collection:slice|slice|convert:toBin|toBin|convert:toHex|toHex|convert:toNumber|toNumber|convert:toOct|toOct|convert:toString|toString|core:and|and|core:exec|exec|core:if|if|core:import|import|core:input|input|core:lazy|lazy|core:log|log|core:loop|loop|core:memoize|memoize|core:new|new|core:not|not|core:or|or|core:panic|panic|core:print|print|core:return|return|core:shl|shl|core:shr|shr|core:test__|test__|core:trace|trace|core:xor|xor|crypto:hash|hash|crypto:md5|md5|crypto:sha256|sha256|crypto:sha512|sha512|csv:parse|parse|date:dateNow|dateNow|date:datetimeNow|datetimeNow|date:day|day|date:month|month|date:timeNow|timeNow|date:timer|timer|dictionary:hasKey|hasKey|dictionary:keys|keys|file:exists|exists|file:read|read|file:write|write|gui:app|app|gui:button|button|gui:frame|frame|gui:hbox|hbox|gui:hpane|hpane|gui:label|label|gui:vbox|vbox|gui:vpane|vpane|gui:window|window|html:markdownToHtml|markdownToHtml|json:generate|generate|json:parse|parse|number:acos|acos|number:acosh|acosh|number:asin|asin|number:asinh|asinh|number:atan|atan|number:atanh|atanh|number:ceil|ceil|number:cos|cos|number:cosh|cosh|number:even|even|number:exp|exp|number:floor|floor|number:ln|ln|number:log10|log10|number:odd|odd|number:random|random|number:round|round|number:sin|sin|number:sinh|sinh|number:sqrt|sqrt|number:tan|tan|number:tanh|tanh|path:createDir|createDir|path:currentDir|currentDir|path:dir|dir|path:getDir|getDir|path:getExt|getExt|path:getFilename|getFilename|path:isDirectory|isDirectory|path:isFile|isFile|path:isSymlink|isSymlink|path:normalizePath|normalizePath|reflection:object|object|reflection:pointer|pointer|reflection:symbolExists|symbolExists|reflection:syms|syms|reflection:type|type|string:capitalize|capitalize|string:char|char|string:characters|characters|string:endsWith|endsWith|string:isAlpha|isAlpha|string:isAlphanumeric|isAlphanumeric|string:isControl|isControl|string:isDigit|isDigit|string:isLowercase|isLowercase|string:isMatch|isMatch|string:isUppercase|isUppercase|string:isWhitespace|isWhitespace|string:levenshtein|levenshtein|string:lines|lines|string:lowercase|lowercase|string:matches|matches|string:padCenter|padCenter|string:padLeft|padLeft|string:padRight|padRight|string:replace|replace|string:split|split|string:startsWith|startsWith|string:strip|strip|string:uppercase|uppercase|string:uuid|uuid|string:words|words|system:delay|delay|system:env|env|system:shell|shell|system:spawn|spawn|system:thread|thread|web:download|download|web:post|post|xml:check|check|yaml:generate|generate|yaml:parse|parse)\b'
       scope: entity.name.tag.arturo
 
-    # Numbers
+    # Constants
     - match: '\b(true|false|null)\b'
       scope: constant.numeric.arturo
 
     # Numbers
-    - match: '\b(-)?[0-9.]+\b'
+    - match: '\b(-)?[0-9]([0-9\.]*)\b'
       scope: constant.numeric.arturo
 
-    - match: '@([0-9]+)?'
-      scope: support.function.arturo
+    # Headings
+    - match: '@([a-zA-Z0-9]+)?'
+      scope: markup.heading punctuation.definition.heading
 
-    # Function definitions
-    - match: '!' #//([a-zA-Z_\.0-9]+)
-      scope: entity.name.class.arturo
-
-    # Function definitions
+    # Property definitions
     - match: ':([a-zA-Z_\.0-9]+)'
       scope: entity.name.class.arturo
-
-    # User definitions
-    #- match: '^(\s+)?([a-zA-Z_]+)\b'
-    #  scope: entity.name.class.arturo
 
   double_quoted_string:
     - meta_scope: string.quoted.double.arturo
