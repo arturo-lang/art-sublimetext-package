@@ -35,7 +35,7 @@ contexts:
       scope: entity.name.tag.arturo
 
     # Symbols
-    - match: '(\||\$|#|!|&([0-9]+)?)'
+    - match: '(\||\$|#|=\>|\-\>)'
       scope: support.function.arturo
 
     # Operators
@@ -43,7 +43,7 @@ contexts:
       scope: entity.name.tag.arturo
 
     # System functions
-    - match: '\b(?<!\.)(a|acos|acosh|add|all|and|any|app|array|array:all|array:any|array:avg|array:count|array:difference|array:filter|array:first|array:fold|array:gcd|array:intersection|array:join|array:last|array:map|array:max|array:median|array:min|array:permutations|array:product|array:range|array:sample|array:shuffle|array:sort|array:sum|array:tail|array:union|array:unique|array:zip|asin|asinh|atan|atanh|avg|b|body|br|button|capitalize|ceil|cell|char|characters|check|checkbox|collection|collection:add|collection:contains|collection:delete|collection:deleteBy|collection:find|collection:get|collection:isEmpty|collection:reverse|collection:set|collection:size|collection:slice|color|contains|convert|convert:toBin|convert:toHex|convert:toNumber|convert:toOct|convert:toString|core|core:and|core:exec|core:if|core:import|core:inherit|core:input|core:lazy|core:let|core:log|core:loop|core:memoize|core:new|core:not|core:or|core:panic|core:print|core:return|core:trace|core:unuse|core:use|core:xor|cos|cosh|count|create|createDir|crypto|crypto:decodeBase64|crypto:encodeBase64|crypto:hash|crypto:md5|crypto:sha256|crypto:sha512|css|csv|csv:parse|currentDir|database|database:create|database:open|date|date:dateNow|date:datetimeNow|date:day|date:month|date:timeNow|date:timer|dateNow|datetimeNow|day|decodeBase64|decodeUrl|delay|delete|deleteBy|dictionary|dictionary:hasKey|dictionary:keys|dictionary:values|difference|dir|div|download|encodeBase64|encodeUrl|endsWith|env|even|exec|exists|exp|file|file:exists|file:filesize|file:read|file:write|filesize|filter|find|first|floor|fold|frame|gcd|generate|get|getDir|getExtension|getFilename|getUrlComponents|gui|gui:app|gui:button|gui:checkbox|gui:frame|gui:hbox|gui:hpane|gui:label|gui:tabs|gui:textfield|gui:vbox|gui:vpane|gui:window|h1|h2|h3|h4|h5|h6|hasKey|hash|hbox|head|hpane|html|html:markdownToHtml|i|if|import|inherit|input|intersection|isAlpha|isAlphanumeric|isControl|isDigit|isDirectory|isEmpty|isFile|isLowercase|isMatch|isPrime|isSymlink|isUppercase|isWhitespace|join|js|json|json:generate|json:parse|keys|label|last|lazy|let|levenshtein|li|lines|ln|log|log10|loop|lowercase|map|markdownToHtml|matches|max|md5|median|memoize|meta|min|month|net|net:download|net:post|new|normalizePath|not|number|number:acos|number:acosh|number:asin|number:asinh|number:atan|number:atanh|number:ceil|number:cos|number:cosh|number:even|number:exp|number:floor|number:isPrime|number:ln|number:log10|number:odd|number:primeFactors|number:random|number:round|number:shl|number:shr|number:sin|number:sinh|number:sqrt|number:tan|number:tanh|object|odd|open|or|p|padCenter|padLeft|padRight|page|panic|parse|path|path:createDir|path:currentDir|path:dir|path:getDir|path:getExtension|path:getFilename|path:getUrlComponents|path:isDirectory|path:isFile|path:isSymlink|path:normalizePath|permutations|pointer|post|primeFactors|print|product|random|range|read|reflection|reflection:object|reflection:pointer|reflection:symbolExists|reflection:syms|reflection:type|replace|return|reverse|round|row|sample|set|sha256|sha512|shell|shl|shr|shuffle|sin|sinh|size|slice|sort|spawn|split|sqrt|startsWith|string|string:capitalize|string:char|string:characters|string:color|string:decodeUrl|string:encodeUrl|string:endsWith|string:isAlpha|string:isAlphanumeric|string:isControl|string:isDigit|string:isLowercase|string:isMatch|string:isUppercase|string:isWhitespace|string:levenshtein|string:lines|string:lowercase|string:matches|string:padCenter|string:padLeft|string:padRight|string:replace|string:split|string:startsWith|string:strip|string:uppercase|string:uuid|string:words|strip|sum|symbolExists|syms|system|system:delay|system:env|system:shell|system:spawn|system:thread|table|tabs|tail|tan|tanh|test|textfield|thread|timeNow|timer|toBin|toHex|toNumber|toOct|toString|trace|type|ul|union|unique|unuse|uppercase|use|uuid|values|vbox|vpane|web|web:a|web:b|web:body|web:br|web:cell|web:css|web:div|web:h1|web:h2|web:h3|web:h4|web:h5|web:h6|web:head|web:i|web:js|web:li|web:meta|web:p|web:page|web:row|web:table|web:ul|window|words|write|xml|xml:check|xml:test|xor|yaml|yaml:generate|yaml:parse|zip)\b'
+    - match: '(\b)(abs|absolutePath|absolutePath!|acos|acosh|all|and|any|append|append!|asin|asinh|atan|atanh|avg|capitalize|capitalize!|ceil|char|chars|clear|contains|copyDir|copyFile|cos|cosh|count|createDir|csec|csech|ctan|ctanh|currentDir|decodeBase64|decodeBase64!|delete|delete!|deleteBy|deleteBy!|deleteDir|deleteFile|deletePrefix|deletePrefix!|deleteSuffix|deleteSuffix!|dirContent|dirContents|dirExists|distance|encodeBase64|encodeBase64!|endsWith|exec|exp|fileCreationTime|fileExists|fileLastAccess|fileLastModification|fileSize|filter|filter!|first|floor|gcd|get|hasKey|if|inc|inc!|input|inputChar|inspect|isAlpha|isAlphaNumeric|isEmpty|isEven|isLowercase|isNumber|isOdd|isPrime|isUppercase|isWhitespace|join|keys|last|lcm|lines|ln|log|log10|log2|loop|lowercase|lowercase!|map|map!|matches|max|md5|md5!|min|moveDir|moveFile|nand|new|nor|normalizePath|normalizePath!|not|or|padCenter|padCenter!|padLeft|padLeft!|padRight|padRight!|panic|pathDir|pathExtension|pathFilename|pop|pop!|print|product|random|range|read|replace|replace!|return|reverse|reverse!|rotate|rotate!|round|sample|sec|sech|set|set!|sha1|sha1!|shl|shl!|shr|shr!|shuffle|shuffle!|sin|sinh|size|slice|sort|sort!|split|sqrt|startsWith|strip|strip!|sum|swap\!|swap|symlinkExists|syms|tan|tanh|toBin|toHex|toNumber|toOct|toReal|toString|type|unique|unique!|uppercase|uppercase!|values|write|xnor|xor|zip)(\b)(!?)'
       scope: entity.name.tag.arturo
 
     # Constants
@@ -55,15 +55,15 @@ contexts:
       scope: constant.numeric.arturo
 
     # Headings
-    - match: '@([a-zA-Z0-9]+)?'
+    - match: '&([0-9]+)?'
       scope: markup.heading punctuation.definition.heading
 
     # Property definitions
-    - match: ':([a-zA-Z_\.0-9]+)'
+    - match: '([a-zA-Z_\.0-9]+)(\s+)?:'
       scope: entity.name.class.arturo
 
     # Property definitions
-    - match: '~([a-zA-Z_\.0-9]+)?'
+    - match: '@([a-zA-Z_\.0-9]+)?'
       scope: storage.type markup.heading
 
   double_quoted_string:
