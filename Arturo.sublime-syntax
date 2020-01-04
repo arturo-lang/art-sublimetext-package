@@ -84,6 +84,6 @@ contexts:
 
   line_comment:
     - meta_scope: comment.line.arturo
-    - match: $
+    - match: $\n?
       pop: true
       
