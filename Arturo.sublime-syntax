@@ -2,88 +2,113 @@
 ---
 file_extensions:
   - art
-  - art.lib
+  - art.d
 scope: source.arturo
 contexts:
-  main:
-    # Double-quoted string literals
-    - match: '"'
-      scope: punctuation.definition.string.begin.arturo
-      push: double_quoted_string
+    main:
 
-    # She-bang line
-    - match: '#!'
-      scope: punctuation.definition.comment.arturo
-      push: line_comment
+        # Backtick multiline string literals
+        - match: '---'
+          scope: string.quoted.double.arturo
+          push: curly_string
 
-    # Single-line comments
-    - match: '//'
-      scope: punctuation.definition.comment.arturo
-      push: line_comment
+        # Double-quoted string literals
+        - match: '"'
+          scope: string.quoted.double.arturo
+          push: double_quoted_string
 
-    # Multi-line comments
-    - match: /\*
-      scope: punctuation.definition.comment.source.arturo
-      push:
-        - meta_scope: comment.block.source.arturo
-        - match: \*/\n?
-          scope: punctuation.definition.comment.source.aruro
+        # Numbers
+        - match: '[0-9]+(\.[0-9]+)?'
+          scope: text.plain
+
+        # She-bang line
+        - match: '#!'
+          scope: punctuation.definition.comment.arturo
+          push: line_comment
+
+        # Single-line comments
+        - match: ;
+          scope: punctuation.definition.comment.arturo
+          push: line_comment
+
+        # attributes
+        - match: '\.\w+:?'
+          scope: support.function.arturo # cyan
+
+        # shortcuts
+        - match: '@|#|\+|\*|\$|\-|\%|\/|\.\.|\^|~|=>|=|<|>|\\'
+        #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
+          scope: constant.numeric.arturo # purple
+
+        # types
+        - match: ':\w+'
+          scope: variable.parameter #markup.heading punctuation.definition.heading 
+
+        # label
+        - match: '(\b\w+\b:)|:'
+        #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
+          scope: entity.name.class.arturo # green
+
+        # # groups
+        # - match: '\[|\]|\(|\)'
+        #   scope: markup.heading punctuation.definition.heading # orange
+
+        - match: '\?'
+          scope: entity.name.tag.arturo # red
+
+        # call
+        - match: '\b(new|join|less|try|push|globalize|equal|lessOrEqual|greater|greaterOrEqual|notEqual|attrs|let|key|call|take|drop|append|remove|combine|serve|sqrt|fold|mail|color|encode|decode|render|read|do|attr|attr|add|sub|mul|div|fdiv|exists|pad|shell|input|capitalize|random|while|max|min|reverse|return|split|prefix|suffix|slice|prefix|suffix|replace|mod|pow|neg|in|not|and|or|xor|shl|shr|pop|dup|swap|nop|eq|ne|gt|ge|lt|le|array|dictionary|function|print|prints|inspect|if|if|else|loop|eval|map|filter|select|size|upper|lower|get|set|to|even|odd|range|sum|product|exit|info|type|is|not|and|or|xor|first|last|unique|sort|inc|dec|set|symbols|stack|case|when)\b'
+        #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
+          scope: entity.name.tag.arturo # red
+
+        - match: '[A-Za-z0-9]+'
+          scope: string.unquoted.yaml #plain.text.arturo
+
+    curly_string:
+        - meta_scope: string.quoted.double.arturo
+        - match: '\|'
+          scope: markup.heading entity.name.tag.arturo
+          push:
+          - meta_scope: source.arturo
+          # - match: '[A-Za-z0-9]+'
+          #   scope: text.plain.arturo
+          - match: '\|'
+            scope: markup.heading entity.name.tag.arturo
+            pop: true
+          - include: 'main'
+        - match: '---'
+          scope: string.quoted.double.arturo
           pop: true
 
-    # Preprocessor directives
-    - match: '#(include|define|if|endif|pragma)'
-      scope: entity.name.tag.arturo
 
-    # Symbols
-    - match: '(\||\$|#|=\>|\-\>)'
-      scope: support.function.arturo
+    double_quoted_string:
+        - meta_scope: string.quoted.double.arturo
+        - match: '\\.'
+          scope: constant.character.escape.arturo
+        - match: '\|'
+          scope: markup.heading entity.name.tag.arturo
+          push:
+          - meta_scope: source.arturo
+          - meta_content_scope: text.plain
+          # - match: '[A-Za-z0-9]+'
+          #   scope: text.plain.arturo
+          - match: '\|'
+            scope: markup.heading entity.name.tag.arturo
+            pop: true
+          - include: 'main'
+        # - match: '`'
+        #   scope: punctuation.definition.string.interpolated.element.begin.arturo
+        #   push:
+        #   - meta_scope: source.arturo
+        #   - match: '`'
+        #     scope: punctuation.definition.string.interpolated.element.end.arturo
+        #     pop: true
+        #   - include: 'main'
+        - match: '"'
+          scope: string.quoted.double.arturo
+          pop: true
 
-    # Operators
-    - match: '(\+|\-|\*|\/|\%|\^|\<|\>|=|\<=|\>=|!=)'
-      scope: entity.name.tag.arturo
-
-    # System functions
-    - match: '(\b)(abs|absolutePath|absolutePath!|acos|acosh|all|and|any|append|append!|asin|asinh|atan|atanh|avg|capitalize|capitalize!|ceil|char|chars|clear|contains|copyDir|copyFile|cos|cosh|count|createDir|csec|csech|ctan|ctanh|currentDir|decodeBase64|decodeBase64!|delete|delete!|deleteBy|deleteBy!|deleteDir|deleteFile|deletePrefix|deletePrefix!|deleteSuffix|deleteSuffix!|dirContent|dirContents|dirExists|distance|encodeBase64|encodeBase64!|endsWith|exec|exp|fileCreationTime|fileExists|fileLastAccess|fileLastModification|fileSize|filter|filter!|first|floor|gcd|get|hasKey|if|inc|inc!|input|inputChar|inspect|isAlpha|isAlphaNumeric|isEmpty|isEven|isLowercase|isNumber|isOdd|isPrime|isUppercase|isWhitespace|join|keys|last|lcm|lines|ln|log|log10|log2|loop|lowercase|lowercase!|map|map!|matches|max|md5|md5!|min|moveDir|moveFile|nand|new|nor|normalizePath|normalizePath!|not|or|padCenter|padCenter!|padLeft|padLeft!|padRight|padRight!|panic|pathDir|pathExtension|pathFilename|pop|pop!|print|product|random|range|read|replace|replace!|return|reverse|reverse!|rotate|rotate!|round|sample|sec|sech|set|set!|sha1|sha1!|shl|shl!|shr|shr!|shuffle|shuffle!|sin|sinh|size|slice|sort|sort!|split|sqrt|startsWith|strip|strip!|sum|swap\!|swap|symlinkExists|syms|tan|tanh|toBin|toHex|toNumber|toOct|toReal|toString|type|unique|unique!|uppercase|uppercase!|values|write|xnor|xor|zip)(\b)(!?)'
-      scope: entity.name.tag.arturo
-
-    # Constants
-    - match: '\b(true|false|null)\b'
-      scope: constant.numeric.arturo
-
-    # Numbers
-    - match: '\b(-)?[0-9]([0-9\.]*)\b'
-      scope: constant.numeric.arturo
-
-    # Headings
-    - match: '&([0-9]+)?'
-      scope: markup.heading punctuation.definition.heading
-
-    # Property definitions
-    - match: '([a-zA-Z_\.0-9]+)(\s+)?:'
-      scope: entity.name.class.arturo
-
-    # Property definitions
-    - match: '@([a-zA-Z_\.0-9]+)?'
-      scope: storage.type markup.heading
-
-  double_quoted_string:
-    - meta_scope: string.quoted.double.arturo
-    - match: '\\.'
-      scope: constant.character.escape.arturo
-    - match: '`'
-      scope: punctuation.definition.string.interpolated.element.begin.arturo
-      push:
-      - meta_scope: source.arturo
-      - match: '`'
-        scope: punctuation.definition.string.interpolated.element.end.arturo
-        pop: true
-      - include: 'main'
-    - match: '"'
-      scope: punctuation.definition.string.end.arturo
-      pop: true
-
-  line_comment:
-    - meta_scope: comment.line.arturo
-    - match: $\n?
-      pop: true
-      
+    line_comment:
+        - meta_scope: comment.line.arturo
+        - match: $
+          pop: true

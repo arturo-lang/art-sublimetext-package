@@ -1,11 +1,11 @@
 <snippet>
 	<content><![CDATA[
-map ${1:array} {
-	${2:// block}
-}
+map ${1:collection} [${2:x}][
+	${3:; block}
+]
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<tabTrigger>map</tabTrigger>
 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
-	<scope>source.arturo</scope> -->
+	<scope>source.arturo</scope>
 </snippet>
