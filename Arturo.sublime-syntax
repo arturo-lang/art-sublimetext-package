@@ -45,7 +45,7 @@ contexts:
           scope: variable.parameter #markup.heading punctuation.definition.heading 
 
         # label
-        - match: '(\b\w+\b:)|:'
+        - match: '(\b[\w]+\b\??:)|:'
         #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
           scope: entity.name.class.arturo # green
 
@@ -53,13 +53,17 @@ contexts:
         # - match: '\[|\]|\(|\)'
         #   scope: markup.heading punctuation.definition.heading # orange
 
-        - match: '\?'
-          scope: entity.name.tag.arturo # red
+        # - match: '\?'
+        #   scope: entity.name.tag.arturo # red
+
+        # core calls
+        - match: '\b(if|else|when|loop|do|return|prints|print|while|until|map|select|filter|import)\b\??'
+          scope: entity.name.tag.arturo
 
         # call
-        - match: '\b(new|join|execute|strip|less|try|push|globalize|equal|lessOrEqual|greater|greaterOrEqual|notEqual|attrs|let|key|call|take|drop|append|remove|combine|serve|sqrt|fold|mail|color|encode|decode|render|read|do|attr|attr|add|sub|mul|div|fdiv|exists|pad|shell|input|capitalize|random|while|max|min|reverse|return|split|prefix|suffix|slice|prefix|suffix|replace|mod|pow|neg|in|not|and|or|xor|shl|shr|pop|dup|swap|nop|eq|ne|gt|ge|lt|le|array|dictionary|function|print|prints|inspect|if|if|else|loop|eval|map|filter|select|size|upper|lower|get|set|to|even|odd|range|sum|product|exit|info|type|is|not|and|or|xor|first|last|unique|sort|inc|dec|set|symbols|stack|case|when)\b'
-        #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
-          scope: entity.name.tag.arturo # red
+        # - match: '\b(new|join|list|relative|less|try|execute|strip|push|globalize|equal|lessOrEqual|greater|greaterOrEqual|notEqual|attrs|let|key|call|take|drop|append|remove|combine|serve|sqrt|fold|mail|color|encode|decode|render|read|do|attr|attr|add|sub|mul|div|fdiv|exists|pad|shell|input|capitalize|random|while|max|min|reverse|return|split|prefix|suffix|slice|prefix|suffix|replace|mod|pow|neg|in|not|and|or|xor|shl|shr|pop|dup|swap|nop|eq|ne|gt|ge|lt|le|array|dictionary|function|print|prints|inspect|if|if|else|loop|eval|map|filter|select|size|upper|lower|get|set|to|even|odd|range|sum|product|exit|info|type|is|not|and|or|xor|first|last|unique|sort|inc|dec|set|symbols|stack|case|when)\b'
+        # #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
+        #   scope: entity.name.tag.arturo # red
 
         - match: '[A-Za-z0-9]+'
           scope: string.unquoted.yaml #plain.text.arturo
