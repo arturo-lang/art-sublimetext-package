@@ -19,7 +19,7 @@ contexts:
 
         # Numbers
         - match: '[0-9]+(\.[0-9]+)?'
-          scope: text.plain
+          scope: constant.numeric.arturo #text.plain
 
         # She-bang line
         - match: '#!'
@@ -36,9 +36,9 @@ contexts:
           scope: support.function.arturo # cyan
 
         # shortcuts
-        - match: '@|#|\+|\*|\$|\-|\%|\/|\.\.|\^|~|=>|=|<|>|\\'
+        - match: '@|#|\+|\||\*|\$|\-|\%|\/|\.\.|\^|~|=>|=|<|>|\\'
         #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
-          scope: constant.numeric.arturo # purple
+          scope: keyword.operator #constant.numeric.arturo # purple
 
         # types
         - match: ':\w+'
@@ -56,9 +56,9 @@ contexts:
         # - match: '\?'
         #   scope: entity.name.tag.arturo # red
 
-        # core calls
-        - match: '\b(if|else|when|loop|do|return|prints|print|while|until|map|select|filter|import)\b\??'
-          scope: entity.name.tag.arturo
+        # # core calls
+        # - match: '\b(if|else|when|loop|do|return|prints|print|while|until|map|select|filter|import)\b\??'
+        #   scope: entity.name.tag.arturo
 
         # call
         # - match: '\b(new|join|list|relative|less|try|execute|strip|push|globalize|equal|lessOrEqual|greater|greaterOrEqual|notEqual|attrs|let|key|call|take|drop|append|remove|combine|serve|sqrt|fold|mail|color|encode|decode|render|read|do|attr|attr|add|sub|mul|div|fdiv|exists|pad|shell|input|capitalize|random|while|max|min|reverse|return|split|prefix|suffix|slice|prefix|suffix|replace|mod|pow|neg|in|not|and|or|xor|shl|shr|pop|dup|swap|nop|eq|ne|gt|ge|lt|le|array|dictionary|function|print|prints|inspect|if|if|else|loop|eval|map|filter|select|size|upper|lower|get|set|to|even|odd|range|sum|product|exit|info|type|is|not|and|or|xor|first|last|unique|sort|inc|dec|set|symbols|stack|case|when)\b'
