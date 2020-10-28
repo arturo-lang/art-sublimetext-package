@@ -1,0 +1,189 @@
+%YAML 1.2
+---
+file_extensions:
+  - art
+scope: source.arturo
+contexts:
+    ########################
+    # MAIN
+    ########################
+
+    main:
+        ## COMMENTS
+
+        # She-bang line
+        - match: '#!'
+          scope: punctuation.definition.comment.arturo
+          push: line_comment
+
+        # Single-line comments
+        - match: ;
+          scope: punctuation.definition.comment.arturo
+          push: line_comment
+
+        ### STRINGS
+
+        # Double-quoted string literals
+        - match: '"'
+          scope: string.quoted.double.arturo
+          push: double_quoted_string
+
+        # FullLine strings
+        - match: «
+          scope: keyword.operator.arturo
+          push: fullline_string
+
+        # Curly strings
+        - match: '{'
+          scope: text.plain.arturo
+          push: curly_string
+
+        # Triple-dash strings
+        - match: '---'
+          scope: string.quoted.double.arturo
+          push: triple_dash_string
+
+        ### LITERALS
+
+        # numbers
+        - match: '[0-9]+(\.[0-9]+)?'
+          scope: text.plain.arturo
+
+        # characters
+        - match: '`.`'
+          scope: string.quoted.double.arturo
+
+        # boolean
+        - match: 'true|false'
+          scope: constant.language.arturo
+
+        # boolean
+        - match: 'null'
+          scope: constant.language.arturo
+
+        ### SYMBOLS
+
+        # syntactic sugar
+        - match: '(->|=>|\|)'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+
+        # operators
+        - match: '@|#|\+|\||\*|\$|\-|\%|\/|\.\.|\^|~|=|<|>|\\|\-\-\-'
+          scope: keyword.operator.arturo
+
+        ### LABELS
+
+        # label
+        - match: '([\w]+\b\??:)'
+          scope: entity.name.arturo
+
+        ### BUILT-IN FUNCTIONS
+
+        - match: '\b(abs|acos|acosh|add|all\?|and|and\?|any\?|append|array|as|asin|asinh|atan|atanh|attr|attr\?|attrs|average|benchmark|call|capitalize|case|clear|color|combine|cos|cosh|csec|csech|ctan|ctanh|dec|decode|dictionary|div|do|download|drop|dup|else|empty|empty\?|encode|equal\?|even\?|execute|exists\?|exit|factors|fdiv|filter|first|flatten|fold|function|gcd|get|globalize|greater\?|greaterOrEqual\?|hash|help|if|if\?|in|in\?|inc|index|info|input|inspect|is\?|join|key\?|keys|last|less\?|lessOrEqual\?|let|levenshtein|list|loop|lower|lower\?|mail|map|match|max|median|min|mod|module|mul|nand|nand\?|neg|negative\?|new|nop|nor|nor\?|not|not\?|notEqual\?|now|numeric\?|odd\?|or|or\?|pad|pause|permutate|pop|positive\?|pow|prefix|prefix\?|prime\?|print|prints|product|push|random|range|read|relative|remove|render|repeat|replace|return|reverse|sample|sec|sech|select|serve|set|set\?|shl|shr|shuffle|sin|sinh|size|slice|sort|split|sqrt|stack|strip|sub|suffix|suffix\?|sum|swap|symbols|take|tan|tanh|to|try|try\?|type|unique|until|upper|upper\?|values|var|webview*|when\?|while|whitespace\?|write|xnor|xnor\?|xor|xor\?|zero\?)\b'
+          scope: variable.function.arturo
+
+    ########################
+    # SUBSCOPES
+    ########################
+
+    line_comment:
+      - meta_scope: comment.line.arturo
+      - match: $
+        pop: true
+
+    double_quoted_string:
+      - meta_include_prototype: false
+      - meta_scope: string.quoted.double.arturo
+      - match: '\\.'
+        scope: constant.character.escape.arturo
+      - match: '\|'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push:
+        - clear_scopes: true
+        - meta_scope: source.arturo
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+        - include: 'main'
+      - match: '"'
+        scope: string.quoted.double.arturo
+        pop: true
+      - include: escaped
+
+    fullline_string:
+      - meta_scope: markup.heading.arturo
+      - match: $
+        pop: true
+
+    curly_string:
+      - meta_include_prototype: false
+      - meta_scope: text.plain.arturo
+      - match: '\\.'
+        scope: constant.character.escape.arturo
+      - match: '\|'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push:
+        - clear_scopes: true
+        - meta_scope: source.arturo
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+        - include: 'main'
+
+      - match: '!html'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push: Packages/HTML/HTML.sublime-syntax
+        with_prototype:
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          push:
+          - clear_scopes: true
+          - meta_scope: source.arturo
+          - match: '\|'
+            scope: markup.heading.arturo punctuation.definition.heading.arturo
+            pop: true
+          - include: 'main'
+        - match: 'html!'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+
+      - match: '!latex'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push: Packages/LaTeX/TeX.sublime-syntax
+        with_prototype:
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          push:
+          - clear_scopes: true
+          - meta_scope: source.arturo
+          - match: '\|'
+            scope: markup.heading.arturo punctuation.definition.heading.arturo
+            pop: true
+          - include: 'main'
+        - match: 'latex!'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+
+      - match: '}'
+        scope: text.plain.arturo
+        pop: true
+      - include: escaped
+
+    triple_dash_string:
+      - meta_include_prototype: false
+      - meta_scope: string.quoted.double.arturo
+      - match: '\\.'
+        scope: constant.character.escape.arturo
+      - match: '\|'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push:
+        - clear_scopes: true
+        - meta_scope: source.arturo
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+        - include: 'main'
+      - match: '---'
+        scope: string.quoted.double.arturo
+        pop: true
+      - include: escaped
