@@ -2,24 +2,14 @@
 ---
 file_extensions:
   - art
-  - art.d
 scope: source.arturo
 contexts:
+    ########################
+    # MAIN
+    ########################
+
     main:
-
-        # Backtick multiline string literals
-        - match: '---'
-          scope: string.quoted.double.arturo
-          push: curly_string
-
-        # Double-quoted string literals
-        - match: '"'
-          scope: string.quoted.double.arturo
-          push: double_quoted_string
-
-        # Numbers
-        - match: '[0-9]+(\.[0-9]+)?'
-          scope: constant.numeric.arturo #text.plain
+        ## COMMENTS
 
         # She-bang line
         - match: '#!'
@@ -31,88 +21,164 @@ contexts:
           scope: punctuation.definition.comment.arturo
           push: line_comment
 
-        # attributes
-        - match: '\.\w+:?'
-          scope: support.function.arturo # cyan
+        ### STRINGS
 
-        # shortcuts
-        - match: '@|#|\+|\||\*|\$|\-|\%|\/|\.\.|\^|~|=>|=|<|>|\\'
-        #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
-          scope: keyword.operator #constant.numeric.arturo # purple
-
-        # types
-        - match: ':\w+'
-          scope: variable.parameter #markup.heading punctuation.definition.heading 
-
-        # label
-        - match: '(\b[\w]+\b\??:)|:'
-        #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
-          scope: entity.name.class.arturo # green
-
-        # # groups
-        # - match: '\[|\]|\(|\)'
-        #   scope: markup.heading punctuation.definition.heading # orange
-
-        # - match: '\?'
-        #   scope: entity.name.tag.arturo # red
-
-        # # core calls
-        # - match: '\b(if|else|when|loop|do|return|prints|print|while|until|map|select|filter|import)\b\??'
-        #   scope: entity.name.tag.arturo
-
-        # call
-        # - match: '\b(new|join|list|relative|less|try|execute|strip|push|globalize|equal|lessOrEqual|greater|greaterOrEqual|notEqual|attrs|let|key|call|take|drop|append|remove|combine|serve|sqrt|fold|mail|color|encode|decode|render|read|do|attr|attr|add|sub|mul|div|fdiv|exists|pad|shell|input|capitalize|random|while|max|min|reverse|return|split|prefix|suffix|slice|prefix|suffix|replace|mod|pow|neg|in|not|and|or|xor|shl|shr|pop|dup|swap|nop|eq|ne|gt|ge|lt|le|array|dictionary|function|print|prints|inspect|if|if|else|loop|eval|map|filter|select|size|upper|lower|get|set|to|even|odd|range|sum|product|exit|info|type|is|not|and|or|xor|first|last|unique|sort|inc|dec|set|symbols|stack|case|when)\b'
-        # #- match: '(?<=^)\s*\b[^\[|\]|\{|\}|\s]+\b(?!\s*\]|\s*\n)'
-        #   scope: entity.name.tag.arturo # red
-
-        - match: '[A-Za-z0-9]+'
-          scope: string.unquoted.yaml #plain.text.arturo
-
-    curly_string:
-        - meta_scope: string.quoted.double.arturo
-        - match: '\|'
-          scope: markup.heading entity.name.tag.arturo
-          push:
-          - meta_scope: source.arturo
-          # - match: '[A-Za-z0-9]+'
-          #   scope: text.plain.arturo
-          - match: '\|'
-            scope: markup.heading entity.name.tag.arturo
-            pop: true
-          - include: 'main'
-        - match: '---'
-          scope: string.quoted.double.arturo
-          pop: true
-
-
-    double_quoted_string:
-        - meta_scope: string.quoted.double.arturo
-        - match: '\\.'
-          scope: constant.character.escape.arturo
-        - match: '\|'
-          scope: markup.heading entity.name.tag.arturo
-          push:
-          - meta_scope: source.arturo
-          - meta_content_scope: text.plain
-          # - match: '[A-Za-z0-9]+'
-          #   scope: text.plain.arturo
-          - match: '\|'
-            scope: markup.heading entity.name.tag.arturo
-            pop: true
-          - include: 'main'
-        # - match: '`'
-        #   scope: punctuation.definition.string.interpolated.element.begin.arturo
-        #   push:
-        #   - meta_scope: source.arturo
-        #   - match: '`'
-        #     scope: punctuation.definition.string.interpolated.element.end.arturo
-        #     pop: true
-        #   - include: 'main'
+        # Double-quoted string literals
         - match: '"'
           scope: string.quoted.double.arturo
-          pop: true
+          push: double_quoted_string
+
+        # FullLine strings
+        - match: «
+          scope: keyword.operator.arturo
+          push: fullline_string
+
+        # Curly strings
+        - match: '{'
+          scope: text.plain.arturo
+          push: curly_string
+
+        # Triple-dash strings
+        - match: '---'
+          scope: string.quoted.double.arturo
+          push: triple_dash_string
+
+        ### LITERALS
+
+        # numbers
+        - match: '[0-9]+(\.[0-9]+)?'
+          scope: text.plain.arturo
+
+        # characters
+        - match: '`.`'
+          scope: string.quoted.double.arturo
+
+        # boolean
+        - match: 'true|false'
+          scope: constant.language.arturo
+
+        # boolean
+        - match: 'null'
+          scope: constant.language.arturo
+
+        ### SYMBOLS
+
+        # syntactic sugar
+        - match: '(->|=>|\|)'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+
+        # operators
+        - match: '@|#|\+|\||\*|\$|\-|\%|\/|\.\.|\^|~|=|<|>|\\|\-\-\-'
+          scope: keyword.operator.arturo
+
+        ### LABELS
+
+        # label
+        - match: '([\w]+\b\??:)'
+          scope: entity.name.arturo
+
+    ########################
+    # SUBSCOPES
+    ########################
 
     line_comment:
-        - meta_scope: comment.line.arturo
-        - match: $
+      - meta_scope: comment.line.arturo
+      - match: $
+        pop: true
+
+    double_quoted_string:
+      - meta_include_prototype: false
+      - meta_scope: string.quoted.double.arturo
+      - match: '\\.'
+        scope: constant.character.escape.arturo
+      - match: '\|'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push:
+        - clear_scopes: true
+        - meta_scope: source.arturo
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
           pop: true
+        - include: 'main'
+      - match: '"'
+        scope: string.quoted.double.arturo
+        pop: true
+      - include: escaped
+
+    fullline_string:
+      - meta_scope: markup.heading.arturo
+      - match: $
+        pop: true
+
+    curly_string:
+      - meta_include_prototype: false
+      - meta_scope: text.plain.arturo
+      - match: '\\.'
+        scope: constant.character.escape.arturo
+      - match: '\|'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push:
+        - clear_scopes: true
+        - meta_scope: source.arturo
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+        - include: 'main'
+
+      - match: '!html'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push: Packages/HTML/HTML.sublime-syntax
+        with_prototype:
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          push:
+          - clear_scopes: true
+          - meta_scope: source.arturo
+          - match: '\|'
+            scope: markup.heading.arturo punctuation.definition.heading.arturo
+            pop: true
+          - include: 'main'
+        - match: 'html!'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+
+      - match: '!latex'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push: Packages/LaTeX/TeX.sublime-syntax
+        with_prototype:
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          push:
+          - clear_scopes: true
+          - meta_scope: source.arturo
+          - match: '\|'
+            scope: markup.heading.arturo punctuation.definition.heading.arturo
+            pop: true
+          - include: 'main'
+        - match: 'latex!'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+
+      - match: '}'
+        scope: text.plain.arturo
+        pop: true
+      - include: escaped
+
+    triple_dash_string:
+      - meta_include_prototype: false
+      - meta_scope: string.quoted.double.arturo
+      - match: '\\.'
+        scope: constant.character.escape.arturo
+      - match: '\|'
+        scope: markup.heading.arturo punctuation.definition.heading.arturo
+        push:
+        - clear_scopes: true
+        - meta_scope: source.arturo
+        - match: '\|'
+          scope: markup.heading.arturo punctuation.definition.heading.arturo
+          pop: true
+        - include: 'main'
+      - match: '---'
+        scope: string.quoted.double.arturo
+        pop: true
+      - include: escaped
