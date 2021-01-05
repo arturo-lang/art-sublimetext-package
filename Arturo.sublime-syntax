@@ -57,7 +57,7 @@ contexts:
         - match: 'true|false'
           scope: constant.language.arturo
 
-        # boolean
+        # null
         - match: 'null'
           scope: constant.language.arturo
 
@@ -72,6 +72,10 @@ contexts:
           scope: keyword.operator.arturo
 
         ### LABELS
+
+        # attributes
+        - match: '\.([\w]+\b\??:?)'
+          scope: text.plain.arturo
 
         # label
         - match: '([\w]+\b\??:)'
